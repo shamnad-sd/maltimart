@@ -1,0 +1,80 @@
+.header{
+    width: 100%;
+    height: 78%;
+    line-height: 70px;
+}
+.nav__wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo{
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+.logo img{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.logo h1{
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+.menu{
+    display: flex;
+    align-items: center;
+    column-gap: 2.7rem;
+    margin-bottom: 0;
+
+}
+.nav__item a {
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+}
+.badge {
+    position: absolute;
+    top: -5px; /* Adjusts the vertical position */
+    right: -10px; /* Adjusts the horizontal position */
+    height: 20px;
+    width: 21px;
+    background-color: #ffffff; /* A vibrant red color */
+    color: white; /* Text color */
+    border-radius: 50%; /* Makes the badge circular */
+    padding: 1px 4px; /* Reduced padding for a smaller badge */
+    font-size: 5px; /* Reduced font size */
+    font-weight: bold; /* Makes the text bold */
+    display: flex; /* Centers the text */
+    align-items: center; /* Centers the text vertically */
+    justify-content: center; /* Centers the text horizontally */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+    transition: transform 0.2s; /* Smooth transition for hover effect */
+    cursor: pointer;
+}
+
+.badge:hover {
+    transform: scale(1.1); /* Slightly enlarges the badge on hover */
+}
+.nav__icons {
+    display: flex;
+    align-items: center;
+    column-gap: 1.2rem;
+}
+.nav__icons span {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+}
+.nav__icons span img {
+    width: 30px;
+    height: 30px;
+}
+.mobile__menu{
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    display: none;
+}
+.nav__active{
+    font-weight: 700 !important;
+}
