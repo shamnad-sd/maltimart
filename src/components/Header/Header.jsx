@@ -6,6 +6,7 @@ import logo from '../../assets/images/eco-logo.png'
 import Usericon from '../../assets/images/user-icon.png'
 import { RiHeartLine, RiMenuLine, RiShoppingBagLine } from '@remixicon/react'
 import { motion } from 'framer-motion'
+import { useSelector } from 'react-redux'
 
 const nav__links = [
   {
@@ -26,6 +27,7 @@ const nav__links = [
 const Header = () => {
 
   const headerRef = useRef(null)
+  const totalQuantity =useSelector(state => state.cart.totalQuantity)
 
   const menuRef = useRef(null)
 
@@ -79,10 +81,10 @@ const Header = () => {
 
             <div className="nav__icons">
               <span className='fav__icon relative'><RiHeartLine />
-                {/* <span className="badge">1</span> */}
+                <span className="badge">2</span>
               </span>
               <span className="cart__icon relative"><RiShoppingBagLine />
-                {/* <span className="badge">1</span> */}
+                <span className="badge">{totalQuantity}</span>
               </span>
               <span>
                 <motion.img whileTap={{ scale: 1.4 }} className='cursor-pointer' src={Usericon} alt={Usericon} />

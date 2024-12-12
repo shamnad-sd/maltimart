@@ -1,0 +1,14 @@
+.product__details{
+    margin-top: 50px;
+}
+.product__details h2{
+    font-size: 1.8rem;
+    margin-top: 10px;
+}
+.product__rating span i{
+    color: coral;
+}
+.product__rating p span {
+    color: coral;
+    font-weight: 500;
+}
