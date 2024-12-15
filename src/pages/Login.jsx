@@ -10,7 +10,6 @@ import { auth } from '../firebase.config'
 import { toast } from 'react-toastify';
 import '../Styles/login.css'
 const Login = () => {
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -28,12 +27,12 @@ const Login = () => {
         email,
         password,
       )
-      const user = userCredential.user
+      const user = userCredential.user;
 
       console.log(user)
       setLoading(false)
       toast.success('Login Successful')
-      navigate('/checkout')
+      navigate("/checkout")
 
     } catch (error) {
       setLoading(false)
