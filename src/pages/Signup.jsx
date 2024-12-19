@@ -21,6 +21,7 @@ const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [file, setFile] = useState(null)
+  const [userImg, setUserImg] = useState('')
   const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
@@ -40,7 +41,8 @@ const Signup = () => {
       await setDoc(doc(db, 'users', user.uid), {
         uid: user.uid,
         displayName: username,
-        email,
+        imgUrl:userImg,
+        email
       })
 
       setLoading(false)
@@ -59,9 +61,9 @@ const Signup = () => {
       <Container className='mt-5 mb-5'>
         <Row>
           {
-            loading?( 
-            <Col lg='12' className='text-center'><h5 className='font-bold'>Loading.....</h5></Col>
-            ):( 
+            loading ? (
+              <Col lg='12' className='text-center'><h5 className='font-bold'>Loading.....</h5></Col>
+            ) : (
               <Col lg='6' className='m-auto text-center'>
                 <h3 className="font-bold fs-4 mb-4">Signup</h3>
 
@@ -90,17 +92,14 @@ const Signup = () => {
                   </FormGroup>
 
                   <FormGroup className='form__group'>
-                    <input
-                      type="file"
-                      onChange={e => setFile(e.target.files[0])}
-                    />
+                    <input type="text" placeholder='URL' value={userImg} onChange={e => setUserImg(e.target.value)} required />
                   </FormGroup>
 
                   <button type='submit' className="buy__btn login__btn">Create an Account</button>
                   <p className='mt-3'>Already have account ? <Link to='/login'>Login</Link></p>
                 </Form>
               </Col>
-          )
+            )
           }
 
         </Row>

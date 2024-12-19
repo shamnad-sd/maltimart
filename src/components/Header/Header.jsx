@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './header.css'
 import { Container, Row } from 'reactstrap'
-import { Link, NavLink,useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import logo from '../../assets/images/eco-logo.png'
 import Usericon from '../../assets/images/user-icon.png'
 import { RiHeartLine, RiMenuLine, RiShoppingBagLine } from '@remixicon/react'
@@ -11,6 +11,9 @@ import useAuth from '../../custom-hooks/useAuth'
 import { signOut } from 'firebase/auth'
 import { auth } from '../../firebase.config'
 import { toast } from 'react-toastify'
+
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../../firebase.config'
 
 const nav__links = [
   {
@@ -31,12 +34,34 @@ const nav__links = [
 const Header = () => {
 
   const headerRef = useRef(null)
-  const totalQuantity =useSelector(state => state.cart.totalQuantity)
+  const totalQuantity = useSelector(state => state.cart.totalQuantity)
   const profileActionRef = useRef(null)
 
   const menuRef = useRef(null)
   const navigate = useNavigate()
-  const {currentUser} = useAuth()
+  const { currentUser } = useAuth()
+
+
+
+  const [userImage, setUserImage] = useState(null);
+  const [userName, setUserName] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (currentUser) {
+        const userDoc = doc(db, 'users', currentUser.uid); // Assuming 'users' is your collection name
+        const userSnapshot = await getDoc(userDoc);
+        if (userSnapshot.exists()) {
+          setUserImage(userSnapshot.data().imgUrl);
+          setUserName(userSnapshot.data().displayName);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [currentUser]);
+
+
 
   const stickyHeaderFunc = () => {
     window.addEventListener('scroll', () => {
@@ -48,14 +73,14 @@ const Header = () => {
     })
   }
 
-  const logout =()=>{
+  const logout = () => {
     signOut(auth)
-    .then(()=>{
-      toast.success('Logged out')
-      navigate("/home")
-    }).catch(err=>{
-      toast.error(err.message)
-    })
+      .then(() => {
+        toast.success('Logged out')
+        navigate("/home")
+      }).catch(err => {
+        toast.error(err.message)
+      })
   }
 
   useEffect(() => {
@@ -69,7 +94,7 @@ const Header = () => {
     menuRef.current.classList.toggle('active__menu')
   }
 
-  const navigateToCart = () =>{
+  const navigateToCart = () => {
     navigate('/cart')
   }
 
@@ -110,30 +135,41 @@ const Header = () => {
                 <span className="badge">{totalQuantity}</span>
               </span>
               <div className='profile'>
-                <motion.img 
-                whileTap={{ scale: 1.4 }} 
-                className='cursor-pointer' 
-                src={Usericon} 
-                alt='' 
-                onClick={toggleProfileActions}
-                />
+                {userImage ? (
+                  <motion.img
+                    whileTap={{ scale: 1.4 }}
+                    className='cursor-pointer'
+                    src={userImage}
+                    alt='UserProfile'
+                    onClick={toggleProfileActions}
+                  />
+                ) : (
+                  <motion.img
+                    whileTap={{ scale: 1.4 }}
+                    className='cursor-pointer'
+                    src={Usericon}
+                    alt='Default User Icon'
+                    onClick={toggleProfileActions}
+                  />
+                )}
+                <span className="user__name">{userName}</span>
 
                 <div className="profile__action" ref={profileActionRef} onClick={toggleProfileActions}>
                   {
                     currentUser ? <span onClick={logout}>Logout</span> :
-                     <div className='flex items-center justify-center flex-col'>
-                      <Link to='/signup'>Signup</Link>
-                      <Link to='/login'>Login</Link>
-                      <Link to='/dashboard'>Dashboard</Link>
-                    </div>
+                      <div className='flex items-center justify-center flex-col'>
+                        <Link to='/signup'>Signup</Link>
+                        <Link to='/login'>Login</Link>
+                        <Link to='/dashboard'>Dashboard</Link>
+                      </div>
                   }
                 </div>
               </div>
               <div className="mobile__menu">
-              <span onClick={toggleMenu}><RiMenuLine /></span>
+                <span onClick={toggleMenu}><RiMenuLine /></span>
+              </div>
             </div>
-            </div>
-            
+
 
           </div>
         </Row>

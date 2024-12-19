@@ -3,7 +3,6 @@ import Helmet from '../components/Helmet/Helmet'
 import CommonSection from '../components/UI/CommonSection'
 import { Col, Container, Row } from 'reactstrap'
 import { useParams } from 'react-router-dom'
-import products from '../assets/data/products'
 import '../Styles/product-details.css'
 import { motion } from 'framer-motion'
 import ProductList from '../components/UI/ProductList'
@@ -11,7 +10,12 @@ import { useDispatch } from 'react-redux'
 import { addItem } from '../redux/slices/CartSlice'
 import { toast } from 'react-toastify'
 
+import { db } from '../firebase.config'
+import { doc, getDoc } from 'firebase/firestore'
+import useGetData from '../custom-hooks/useGetData'
 const ProductDetails = () => {
+
+  const [product, setProduct] = useState({})
 
   const [tab, setTab] = useState('desc')
 
@@ -21,9 +25,32 @@ const ProductDetails = () => {
 
   const [rating, setRating] = useState(null)
   const { id } = useParams()
-  const product = products.find(item => item.id === id)
 
-  const { imgUrl, productName, price, avgRating, reviews, description, shortDesc, category } = product
+  const { data: products } = useGetData('products')
+
+  const docRef = doc(db, 'products', id)
+
+  useEffect(() => {
+    const getProduct = async () => {
+      const docSnap = await getDoc(docRef)
+      if (docSnap.exists()) {
+        setProduct({ ...docSnap.data(), id: docSnap.id })
+      } else {
+        console.log('No such document!')
+      }
+    }
+    getProduct()
+  }, [])
+
+  const { imgUrl,
+    productName,
+    price,
+    // avgRating,
+    // reviews,
+    description,
+    shortDesc,
+    category
+  } = product
 
   const relatedProducts = products.filter(item => item.category === category)
 
@@ -33,7 +60,7 @@ const ProductDetails = () => {
     const reviewUserName = reviewUser.current.value
     const reviewUserMsg = reviewMsg.current.value
 
-    console.log(reviewUserName,reviewUserMsg, rating)
+    console.log(reviewUserName, reviewUserMsg, rating)
 
     const reviewObj = {
       userName: reviewUserName,
@@ -54,9 +81,9 @@ const ProductDetails = () => {
     toast.success('Product added to cart successfully')
   }
 
-  useEffect (()=>{
-    window.scrollTo(0,0)
-  },[product])
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [product])
 
   return <Helmet title='ProductDetails'>
     <CommonSection title={productName} />
@@ -78,7 +105,7 @@ const ProductDetails = () => {
                   <span><i className="ri-star-fill"></i></span>
                   <span><i className="ri-star-half-s-fill"></i></span>
                 </div>
-                <p>(<span>{avgRating}</span> Ratings)</p>
+                {/* <p>(<span>{avgRating}</span> Ratings)</p> */}
               </div>
 
               <div className='flex  items-center gap-3'>
@@ -101,7 +128,7 @@ const ProductDetails = () => {
           <Col lg='12'>
             <div className="tap__wrapper flex items-center gap-5">
               <h6 className={`${tab === 'desc' ? 'active__tab' : ''} cursor-pointer`} onClick={() => setTab('desc')}>Description</h6>
-              <h6 className={`${tab === 'rev' ? 'active__tab' : ''} cursor-pointer`} onClick={() => setTab('rev')}>Reviews ({reviews.length})</h6>
+              <h6 className={`${tab === 'rev' ? 'active__tab' : ''} cursor-pointer`} onClick={() => setTab('rev')}>Reviews</h6>
             </div>
 
             {
@@ -112,7 +139,7 @@ const ProductDetails = () => {
                 <div className='product__review mt-4'>
                   <div className="review__wrapper">
                     <ul>
-                      {
+                      {/* {
                         reviews?.map((item, index) => (
                           <li key={index} className='mb-4'>
                             <h6>Ansaf k</h6>
@@ -120,7 +147,7 @@ const ProductDetails = () => {
                             <p>{item.text}</p>
                           </li>
                         ))
-                      }
+                      } */}
                     </ul>
                     <div className="review__form">
                       <h4>Leave your Experience</h4>
@@ -130,17 +157,17 @@ const ProductDetails = () => {
                         </div>
 
                         <div className="form__group flex items-center gap-5 cursor-pointer">
-                          <motion.span whileTap={{scale : 1.2}} onClick={() => setRating(1)}>1<i className="ri-star-s-fill"></i></motion.span>
-                          <motion.span whileTap={{scale : 1.2}} onClick={() => setRating(2)}>2<i className="ri-star-s-fill"></i></motion.span>
-                          <motion.span whileTap={{scale : 1.2}} onClick={() => setRating(3)}>3<i className="ri-star-s-fill"></i></motion.span>
-                          <motion.span whileTap={{scale : 1.2}} onClick={() => setRating(4)}>4<i className="ri-star-s-fill"></i></motion.span>
-                          <motion.span whileTap={{scale : 1.2}} onClick={() => setRating(5)}>5<i className="ri-star-s-fill"></i></motion.span>
+                          <motion.span whileTap={{ scale: 1.2 }} onClick={() => setRating(1)}>1<i className="ri-star-s-fill"></i></motion.span>
+                          <motion.span whileTap={{ scale: 1.2 }} onClick={() => setRating(2)}>2<i className="ri-star-s-fill"></i></motion.span>
+                          <motion.span whileTap={{ scale: 1.2 }} onClick={() => setRating(3)}>3<i className="ri-star-s-fill"></i></motion.span>
+                          <motion.span whileTap={{ scale: 1.2 }} onClick={() => setRating(4)}>4<i className="ri-star-s-fill"></i></motion.span>
+                          <motion.span whileTap={{ scale: 1.2 }} onClick={() => setRating(5)}>5<i className="ri-star-s-fill"></i></motion.span>
                         </div>
 
                         <div className="form__group">
                           <textarea rows={4} type="text" placeholder='Review Message...' ref={reviewMsg} required />
                         </div>
-                        <motion.button whileTap={{scale : 1.2}} type='submit' className="buy__btn" required>Submit</motion.button>
+                        <motion.button whileTap={{ scale: 1.2 }} type='submit' className="buy__btn" required>Submit</motion.button>
                       </form>
                     </div>
                   </div>

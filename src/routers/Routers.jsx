@@ -10,6 +10,8 @@ import ProtectedRoute from "./ProtectedRoute"
 import AllProducts from "../Admin/AllProducts"
 import AddProducts from "../Admin/AddProducts"
 import Dashboard from "../Admin/Dashboard"
+import Users from "../Admin/Users"
+
 
 const Routers = () => {
   return (
@@ -27,12 +29,10 @@ const Routers = () => {
          <Route path="dashboard" element={<Dashboard/>} />
          <Route path="dashboard/all-products" element={<AllProducts/>} />
          <Route path="dashboard/add-products" element={<AddProducts/>} />
+         <Route path="dashboard/users" element={<Users/>} />
         </Route>
         
 
-        {/* <Route path="checkout" element={<ProtectedRoute>
-          <Checkout/>
-        </ProtectedRoute>}/> */}
         <Route path="login" element={<Login/>}/>
         <Route path="signup" element={<Signup/>}/>
       </Routes>

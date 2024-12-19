@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'reactstrap'
 
 import heroImg from '../../src/assets/images/hero-img.png'
 
-import Products from '../assets/data/products'
+// import Products from '../assets/data/products'
 
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -15,8 +15,11 @@ import ProductList from '../components/UI/ProductList'
 
 import counterImg from '../assets/images/counter-timer-img.png'
 import Clock from '../components/UI/Clock'
+import useGetData from '../custom-hooks/useGetData'
 
 const Home = () => {
+
+  const { data:products, loading } = useGetData('products')
 
   const [trendingProducts, setTrendingProducts] = useState([])
   const [bestSalesProducts, setBestSalesProducts] = useState([])
@@ -27,27 +30,27 @@ const Home = () => {
   const year = new Date().getFullYear()
 
   useEffect(() => {
-    const filteredTrendingProducts = Products.filter((item) => item.category === "chair");
+    const filteredTrendingProducts = products.filter((item) => item.category === "chair");
     setTrendingProducts(filteredTrendingProducts)
 
 
-    const filteredBestSalesProducts = Products.filter((item) => item.category === "sofa");
+    const filteredBestSalesProducts = products.filter((item) => item.category === "sofa");
     setBestSalesProducts(filteredBestSalesProducts)
 
 
-    const filteredMobileProducts = Products.filter((item) => item.category === "mobile");
+    const filteredMobileProducts = products.filter((item) => item.category === "stools");
     setMobileProducts(filteredMobileProducts)
 
 
-    const filteredWirelessProducts = Products.filter((item) => item.category === "wireless");
+    const filteredWirelessProducts = products.filter((item) => item.category === "lighting");
     setWirelessProducts(filteredWirelessProducts)
 
-    const filteredPopularProducts = Products.filter((item) => item.category === "watch");
+    const filteredPopularProducts = products.filter((item) => item.category === "tables");
     setPopularProducts(filteredPopularProducts)
-    
 
 
-  }, [])
+
+  }, [products])
 
   return <Helmet title={"Home"}>
 
@@ -82,24 +85,37 @@ const Home = () => {
       <Container>
         <Row>
           <Col lg='12' className='text-center'>
-            <h2 className="section__title">
+            <h2 className="section__title mb-10">
               Trending Products
             </h2>
           </Col>
-          <ProductList data={trendingProducts} />
+          {
+            loading ? (<h4>Loading......</h4>)
+              : (
+                <ProductList data={trendingProducts} />
+              )
+          }
+
         </Row>
       </Container>
     </section>
 
-    <section className="best__sale">
+    <section className="best__sale mb-5">
       <Container>
         <Row>
           <Col lg='12' className='text-center'>
-            <h2 className="section__title">
+            <h2 className="section__title mb-10">
               Best Sale
             </h2>
           </Col>
-          <ProductList data={bestSalesProducts} />
+          {
+            loading ? (<h4>Loading......</h4>)
+              : (
+                <ProductList data={bestSalesProducts} />
+              )
+          }
+
+
         </Row>
       </Container>
     </section>
@@ -134,22 +150,41 @@ const Home = () => {
               New Arrivals
             </h2>
           </Col>
-          <ProductList data={mobileProducts} />
-          <ProductList data={wirelessProducts}/>
+          {
+            loading ? (<h4>Loading......</h4>)
+              : (
+                <ProductList data={mobileProducts} />
+              )
+          }
+
+          {
+            loading ? (<h4>Loading......</h4>)
+              : (
+                <ProductList data={wirelessProducts} />
+              )
+          }
+
         </Row>
       </Container>
     </section>
 
     <section className="popular__category">
-    <Container>
+      <Container>
         <Row>
           <Col lg='12' className='text-center'>
             <h2 className="section__title mb-5">
               Popular In Category
             </h2>
           </Col>
-          <ProductList data={popularProducts} />
+          {
+            loading ? (<h4>Loading......</h4>)
+              : (
+                <ProductList data={popularProducts} />
+              )
+          }
+
           
+
         </Row>
       </Container>
     </section>
