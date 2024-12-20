@@ -42,7 +42,8 @@ const Signup = () => {
         uid: user.uid,
         displayName: username,
         imgUrl:userImg,
-        email
+        email,
+        role:false
       })
 
       setLoading(false)

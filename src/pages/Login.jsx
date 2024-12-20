@@ -4,15 +4,17 @@ import { Col, Container, Form, FormGroup, Row } from 'reactstrap'
 import { Link, useNavigate } from 'react-router-dom'
 
 
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase.config'
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { auth, db } from '../firebase.config'
 
 import { toast } from 'react-toastify';
 import '../Styles/login.css'
+import { doc, getDoc } from 'firebase/firestore'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [isCurrentUser, setIsCurrentUser] = useState(null)
 
   const navigate = useNavigate()
 
@@ -28,17 +30,31 @@ const Login = () => {
         password,
       )
       const user = userCredential.user;
+      const res = getDoc(doc(db, "users", user.uid));
 
-      console.log(user)
-      setLoading(false)
-      toast.success('Login Successful')
-      navigate("/checkout")
+      const userData = (await res).data();
+
+      if (userData.role) {
+        navigate('/dashboard')
+      }
+      else {
+        setLoading(false)
+        toast.success('Login Successful')
+        navigate("/checkout")
+      }
+
+
+
 
     } catch (error) {
       setLoading(false)
       toast.error(error.message)
     }
   }
+
+
+
+
 
 
   return (

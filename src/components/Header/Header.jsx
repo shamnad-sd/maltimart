@@ -74,11 +74,10 @@ const Header = () => {
   }
 
   const logout = () => {
+    navigate("/home")
+    toast.success('Logged out')
     signOut(auth)
-      .then(() => {
-        toast.success('Logged out')
-        navigate("/home")
-      }).catch(err => {
+      .catch(err => {
         toast.error(err.message)
       })
   }
