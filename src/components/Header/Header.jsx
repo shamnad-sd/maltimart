@@ -157,9 +157,9 @@ const Header = () => {
                   {
                     currentUser ? <span onClick={logout}>Logout</span> :
                       <div className='flex items-center justify-center flex-col'>
-                        <Link to='/signup'>Signup</Link>
+                        <Link to='/signup'>SignUp</Link>
                         <Link to='/login'>Login</Link>
-                        <Link to='/dashboard'>Dashboard</Link>
+                        <Link to='/dashboard'>DashBoard</Link>
                       </div>
                   }
                 </div>
