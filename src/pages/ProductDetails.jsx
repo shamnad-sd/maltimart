@@ -150,7 +150,7 @@ const ProductDetails = () => {
                       } */}
                     </ul>
                     <div className="review__form">
-                      <h4>Leave your Experience</h4>
+                      <h4>Leave Your Experience</h4>
                       <form onSubmit={submitHandler}>
                         <div className="form__group">
                           <input type="text" placeholder='Enter name' ref={reviewUser} />
