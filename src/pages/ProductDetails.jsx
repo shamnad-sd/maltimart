@@ -128,7 +128,7 @@ const ProductDetails = () => {
           <Col lg='12'>
             <div className="tap__wrapper flex items-center gap-5">
               <h6 className={`${tab === 'desc' ? 'active__tab' : ''} cursor-pointer`} onClick={() => setTab('desc')}>Description</h6>
-              <h6 className={`${tab === 'rev' ? 'active__tab' : ''} cursor-pointer`} onClick={() => setTab('rev')}>Reviews</h6>
+              <h6 className={`${tab === 'rev' ? 'active__tab' : ''} cursor-pointer`} onClick={() => setTab('rev')}>REVIEWS</h6>
             </div>
 
             {
