@@ -67,11 +67,11 @@ const Shop = () => {
            <div className="filter__widget">
             <select onChange={handleFilter}>
               <option>Category</option>
-              <option value="chair">Chair</option>
-              <option value="sofa">Sofa</option>
-              <option value="watch">Watch</option>
-              <option value="wireless">Wireless</option>
-              <option value="mobile">Mobile</option>
+              <option value="chair">chair</option>
+              <option value="sofa">sofa</option>
+              <option value="watch">watch</option>
+              <option value="wireless">wireless</option>
+              <option value="mobile">mobile</option>
             </select>
            </div>
           </Col>
