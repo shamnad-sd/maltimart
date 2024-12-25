@@ -128,7 +128,7 @@ const ProductDetails = () => {
           <Col lg='12'>
             <div className="tap__wrapper flex items-center gap-5">
               <h6 className={`${tab === 'desc' ? 'active__tab' : ''} cursor-pointer`} onClick={() => setTab('desc')}>Description</h6>
-              <h6 className={`${tab === 'rev' ? 'active__tab' : ''} cursor-pointer`} onClick={() => setTab('rev')}>REVIEWS</h6>
+              <h6 className={`${tab === 'rev' ? 'active__tab' : ''} cursor-pointer`} onClick={() => setTab('rev')}>Reviews</h6>
             </div>
 
             {
@@ -138,17 +138,6 @@ const ProductDetails = () => {
               ) : (
                 <div className='product__review mt-4'>
                   <div className="review__wrapper">
-                    <ul>
-                      {/* {
-                        reviews?.map((item, index) => (
-                          <li key={index} className='mb-4'>
-                            <h6>Ansaf k</h6>
-                            <span>{item.rating} (Rating)</span>
-                            <p>{item.text}</p>
-                          </li>
-                        ))
-                      } */}
-                    </ul>
                     <div className="review__form">
                       <h4>Leave Your Experience</h4>
                       <form onSubmit={submitHandler}>
@@ -170,13 +159,13 @@ const ProductDetails = () => {
                         <motion.button whileTap={{ scale: 1.2 }} type='submit' className="buy__btn" required>Submit</motion.button>
                       </form>
                     </div>
-                  </div>
+                  </div> 
                 </div>
               )}
           </Col>
 
           <Col lg='12' className='mt-5'>
-            <h2 className="related__title">You Might Also Like</h2>
+            <h2 className="related__title mb-8">You Might Also Like</h2>
           </Col>
           <ProductList data={relatedProducts} />
         </Row>
