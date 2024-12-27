@@ -63,7 +63,7 @@ const Signup = () => {
         <Row>
           {
             loading ? (
-              <Col lg='12' className='text-center'><h5 className='font-bold'>Loading.....</h5></Col>
+              <Col lg='12' className='text-center'><h5 className='font-bold'>Loading.......</h5></Col>
             ) : (
               <Col lg='6' className='m-auto text-center'>
                 <h3 className="font-bold fs-4 mb-4">SIGNUP</h3>
