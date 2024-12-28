@@ -158,7 +158,7 @@ const Home = () => {
           }
 
           {
-            loading ? (<h4>Loading......</h4>)
+            loading ? (<h4>Loading..........</h4>)
               : (
                 <ProductList data={wirelessProducts} />
               )
