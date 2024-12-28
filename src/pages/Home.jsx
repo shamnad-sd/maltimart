@@ -151,7 +151,7 @@ const Home = () => {
             </h2>
           </Col>
           {
-            loading ? (<h4>Loading......</h4>)
+            loading ? (<h4>Loading........</h4>)
               : (
                 <ProductList data={mobileProducts} />
               )
