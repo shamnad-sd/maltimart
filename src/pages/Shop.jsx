@@ -89,7 +89,7 @@ const Shop = () => {
 
           <Col lg='6' md='6'>
           <div className="search__box">
-            <input type="text" placeholder='Search........' onChange={handleSearch} />
+            <input type="text" placeholder='Search..........' onChange={handleSearch} />
             <span><i className="ri-search-line"></i></span>
           </div>
           </Col>
@@ -101,7 +101,7 @@ const Shop = () => {
       <Container>
         <Row>
           {
-            productsData.length === 0 ? <h1 className='text-center fs-4'>No Products Are Found !</h1>
+            productsData.length === 0 ? <h1 className='text-center fs-4'>No Products Are Found !!!</h1>
             : <ProductList data={productsData}/>
           }
         </Row>
